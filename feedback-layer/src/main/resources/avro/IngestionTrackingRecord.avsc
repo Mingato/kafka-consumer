@@ -1,0 +1,66 @@
+{
+  "namespace": "com.abinbev.b2b",
+  "type": "record",
+  "name": "IngestionTrackingRecord",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "traceId",
+      "type": "string"
+    },
+    {
+      "name": "parentTraceId",
+      "type": "string"
+    },
+    {
+      "name": "operation",
+      "type": "string"
+    },
+    {
+      "name": "steps",
+      "type": {
+        "type": "array",
+        "items": "string"
+        }
+    },
+    {
+      "name": "success",
+      "type": "boolean"
+    },
+    {
+      "name": "errorCode",
+      "type": ["string", "null"]
+    },
+    {
+      "name": "errorMessage",
+      "type": ["string", "null"]
+    },
+    {
+      "name": "country",
+      "type": "string"
+    },
+    {
+      "name": "vendorId",
+      "type": "string"
+    },
+    {
+      "name": "payload",
+      "type": ["string", "null"]
+    },
+    {
+      "name": "sourceSystem",
+      "type": "string"
+    },
+    {
+      "name": "durationMs",
+      "type": "long"
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    }
+  ]
+}

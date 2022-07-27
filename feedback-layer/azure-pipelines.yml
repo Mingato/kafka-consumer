@@ -1,0 +1,49 @@
+name: $(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - feedback-layer
+
+variables:
+  - group: B2BStarter-Artifact-vg
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: GHQ_B2B_Delta/golden-CICD-library
+      ref: refs/heads/master
+
+parameters:
+  - name: releaseType
+    displayName: "Deploy type"
+    type: string
+    default: "snapshot"
+    values:
+      - major - Increase
+      - minor - Increase
+      - release
+      - snapshot
+
+extends:
+  template: artifact_pipeline.yml@templates
+  parameters:
+    artifactName: 'b2b-starter'
+    environmentName: 'b2b-commons-starter'
+    goldenCICDRepo: templates
+    downloadVault: false
+    language: 'Java'
+    mavenPath: ["feedback-layer"]
+    mavenIntegrationTest: false
+    mavenIntegrationTestGoal: "verify -Pintegration-test"
+    mavenUnitTest: true
+    mavenUnitTestGoal: "install"
+    releaseType: ${{ parameters.releaseType }}
+    snykAdditionalArguments: '--detection-depth=4 --prune-repeated-subdependencies'
+    sonarBuildBreaker: true
+    sonarScan: true
+    sonarConfigFile: $(Build.Repository.LocalPath)/feedback-layer/sonar-project.properties

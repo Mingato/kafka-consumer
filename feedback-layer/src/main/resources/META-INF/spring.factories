@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.abinbev.b2b.data.ingestion.feedback.layer.configuration.FeedbackLayerAutoConfiguration

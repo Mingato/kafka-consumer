@@ -1,0 +1,40 @@
+{
+  "fields": [
+    {
+      "default": null,
+      "name": "entity",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "default": null,
+      "name": "version",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "default": null,
+      "name": "payload",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "name": "GenericObject",
+  "namespace": "com.abinbev.beesforce.kafkaconsumer.models",
+  "type": "record"
+}

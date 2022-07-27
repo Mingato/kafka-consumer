@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  data:
+    mongodb:
+      uri: mongodb://${mongodb.testcontainer.ip}:${mongodb.testcontainer.port}
+      database: BeesForceOrderHistory
+      auto-index-creation: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    config:
+      clientId: lkc-w3xpj
+      bootstrapServer: ${spring.kafka.bootstrap-servers}
+      schemaRegistryUrl: mock://testUrl
+      topicName: generic-topic-dev
+      autoOffsetReset: earliest
+      groupId: beesforce-orderhistory-consumer
+      dltName: orders-topic-dev-dlt
+      retries: 3
+      acks: all
+
+event-store.days-alive: 60
+consumer:
+  toggle:
+    sendObjectToService: false #if false save object in the mongodb
+
+abi:
+  toggle:
+    countries: BR
+
+mongock.change-logs-scan-package:
+  - com.abinbev.beesforce.orderhistory.dbchangelogs

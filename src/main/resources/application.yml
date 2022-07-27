@@ -1,0 +1,92 @@
+server:
+  contextPath: /
+  port: 8080
+  tomcat:
+    max-threads: 10
+
+ribbon:
+  eureka:
+    enabled: false
+
+logging:
+  level:
+    root: ${LOG_ROOT:INFO}
+    org.springframework: ${LOG_SPRING:INFO}
+
+spring:
+  application:
+    name: beesforce-consumer
+  feedback:
+    layer:
+      cache:
+        heapSize: ${FEEDBACK_LAYER_HEAP_SIZE:2000}
+        ttlSeconds: ${FEEDBACK_LAYER_TTL_SEC:60}
+  data:
+    mongodb:
+      uri: ${MONGODB_CONNECTION_STRING:mongodb://localhost}
+      database: BeesForceConsumer
+      collectionName: ${COLLECTION_NAME0:accounts}
+      auto-index-creation: true
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER_CONFIG:pkc-jv53m.eastus.azure.confluent.cloud:9092} #http://localhost:9092
+    properties:
+      schema.registry.url: ${KAFKA_SCHEMA_REGISTRY:https://psrc-q2n1d.westus2.azure.confluent.cloud}
+      specific.avro.reader: false
+      compression.type: gzip
+      max.in.flight.requests.per.connection: 15
+      partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
+
+      basic.auth.credentials.source: USER_INFO
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule   required username='${KAFKA_BROKER_USER:JTHSGUWRWQ6AVXMW}'   password='${KAFKA_BROKER_PASSWORD:6eZmTzJl6lCs0BqR2X4Z7f61b/tlGlSzqOQKSuBBaiePOgPUcW3EWsj/XacnMDQC}';
+      #sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule   required username='${KAFKA_BROKER_USER:E5X7Y6DWEAY5ZZPF}'   password='${KAFKA_BROKER_PASSWORD:qiifgUfq6mhLyqunNGOvVIAihD7LK/E1G2D/1MHHtoflAhYXKesI96bUgFTKxZIm}';
+      #basic.auth.user.info: ${SCHEMA_REGISTRY_USER:JTHSGUWRWQ6AVXMW}:${SCHEMA_REGISTRY_PASSWORD:6eZmTzJl6lCs0BqR2X4Z7f61b/tlGlSzqOQKSuBBaiePOgPUcW3EWsj/XacnMDQC}
+      basic.auth.user.info: ${SCHEMA_REGISTRY_USER:NTRDS4PU5C4BBVKE}:${SCHEMA_REGISTRY_PASSWORD:SakxKERMo5KEWIZ3/0dLnkx+nkFj9kweN+8GCMqlt7SS+e0WDcO88F8fQBZqo5tF}
+      auto.offset.reset: ${KAFKA_CONFIG_AUTO_OFFSET_RESET:latest}
+
+    consumer:
+      group-id: ${KAFKA_GENERIC_CONSUMER_GROUP:generic_consumer}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      retries: ${KAFKA_PRODUCER_RETRIES:3}
+
+    topicPrefix: ${KAFKA_TOPIC_PREFIX0:generic-entity-processor-force-ucc-post-v1}
+    topicPrefixProcessed: ${KAFKA_TOPIC_PREFIX_PROCESSED0:generic-entity-processor-force-ucc-post-v1-processor}
+
+    feedBackTopic: ${KAFKA_FEEDBACK_LAYER_TOPIC:feedback-layer}
+    feedBackPartitions: ${KAFKA_FEEDBACK_LAYER_TOPIC_PARTITIONS:3}
+    dltSuffix: ${KAFKA_DLT_SUFFIX:.DLT}
+    retrySuffix: ${KAFKA_RETRY_SUFFIX:.RETRY}
+    retry: 3
+    partitions: ${KAFKA_TOPIC_PARTITIONS:25}
+    partitions-processed: ${KAFKA_TOPIC_PARTITIONS_PROCESSED:5}
+    acks: ${KAFKA_CONFIG_ACKS:all}
+
+    autoOffsetReset: ${KAFKA_CONFIG_AUTO_OFFSET_RESET:latest}
+
+event-store.days-alive: 60
+
+feign:
+  client:
+    name: ${SERVICE_NAME0:orderhistory-service}
+    url: ${SERVICE_URL0:http://orderhistory-service:8080/order}
+    config:
+      default:
+        connectTimeout: ${FEIGN_CON_TIMEOUT:10000}
+        readTimeout: ${FEIGN_READ_TIMEOUT:10000}
+        loggerLevel: ${FEIGN_LOGGER:basic}
+
+abi:
+  toggle:
+    countries: ${TOGGLE_COUNTRY:} # BR,DO,CO,PE,MX,EC,HN,SV,PA,ZA
+    vendorIds: ${TOGGLE_VENDOR_ID:3c5eece4-ac37-44e3-a95e-a264802a7dfe}
+
+mongock.change-logs-scan-package:
+  - com.abinbev.beesforce.kafkaconsumer.dbchangelogs

@@ -1,0 +1,155 @@
+{
+  "fields": [
+    {
+      "name": "header",
+      "type": {
+        "fields": [
+          {
+            "name": "country",
+            "type": {
+              "avro.java.string": "String",
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentRequestTraceId",
+            "type": {
+              "avro.java.string": "String",
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestTraceId",
+            "type": {
+              "avro.java.string": "String",
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": {
+              "logicalType": "timestamp-millis",
+              "type": "long"
+            }
+          },
+          {
+            "default": null,
+            "name": "timezone",
+            "type": [
+              "null",
+              {
+                "avro.java.string": "String",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "vendorId",
+            "type": {
+              "avro.java.string": "String",
+              "type": "string"
+            }
+          }
+        ],
+        "name": "HeaderRecord",
+        "namespace": "com.abinbev.b2b.data.ingestion.etl.avro",
+        "type": "record"
+      }
+    },
+    {
+      "name": "bdrId",
+      "type": {
+        "avro.java.string": "String",
+        "type": "string"
+      }
+    },
+    {
+      "default": null,
+      "name": "distributionCenterId",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "default": null,
+      "name": "supervisorId",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "default": null,
+      "name": "sectorId",
+      "type": [
+        "null",
+        {
+          "avro.java.string": "String",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "default": null,
+      "name": "isActive",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "name": "accounts",
+      "type": {
+        "items": {
+          "fields": [
+            {
+              "name": "accountId",
+              "type": {
+                "avro.java.string": "String",
+                "type": "string"
+              }
+            }
+          ],
+          "name": "UccAccountRecord",
+          "type": "record"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "default": null,
+      "name": "thirdPartyBdr",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "default": null,
+      "name": "profile",
+      "type": [
+        "null",
+        {
+          "name": "ProfileEnumRecord",
+          "symbols": [
+            "BDR",
+            "NEGBDR",
+            "MERCHANDISER",
+            "BRFBDR"
+          ],
+          "type": "enum"
+        }
+      ]
+    }
+  ],
+  "name": "UccPostV1Record",
+  "namespace": "com.abinbev.b2b.data.ingestion.etl.avro.Ucc",
+  "type": "record"
+}
