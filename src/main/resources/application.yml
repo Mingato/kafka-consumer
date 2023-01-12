@@ -85,7 +85,7 @@ feign:
 
 abi:
   toggle:
-    countries: ${TOGGLE_COUNTRY:} # BR,DO,CO,PE,MX,EC,HN,SV,PA,ZA
+    countries: ${TOGGLE_COUNTRY:} # BR,DO,CO,PE,MX,EC,HN,SV,PA,ZA,US
     vendorIds: ${TOGGLE_VENDOR_ID:3c5eece4-ac37-44e3-a95e-a264802a7dfe}
 
 mongock.change-logs-scan-package:
